@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.js" integrity="sha512-H05oT7BAjM9Ai1IaFX9zr61NtE2e1P0MkTz3AZXBnseaJSAOt2FGMFJ+vVGutaJxEGA1jxUiYsTBYQNE08/Erw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        class titlePage extends Phaser.Scene {
+            constructor(){
+                super({key: 'titlePage'})
+            }
+
+            preload(){
+                this.load.image('icon', 'assets/images/icon.png');
+                this.load.image('text', 'assets/images/text.png');
+                this.load.audio('song', 'assets/sounds/snow.wav');
+            }
+
+            create() {
+            let icon = this.add.sprite(1920/2, 300, 'icon').setAlpha(1);
+            let title = this.add.sprite(1920/2, 700, 'text');
+            let snow = this.sound.add('song', {
+                loop: true,
+                volume: 0.3,
+            });
+            title.scale = 1.4;
+            icon.scale = 0.7;
+            snow.play();
+
+            this.cameras.main.fadeIn(3000);
+
+            this.input.once('pointerdown', () => {
+                this.scene.start('infoPage');
+            });
+
+            }
+        }
+
+        class infoPage extends Phaser.Scene {
+            constructor() {
+                super({key: 'infoPage'})
+            }
+
+            preload() {
+                this.load.image('characters', 'assets/images/characters.png');
+            }
+
+            create() {
+                this.add.rectangle(60, 450, 10, 800, 0xffffff);
+                this.add.circle(180, 150, 70, 0xffffff);
+                this.add.text(0, 300, 
+                `
+                Meet the residents of
+                Duskfield, a town full of
+                animal hybrids who are all
+                waiting to make your
+                acquaintance.`, {fontSize: 35}
+                );
+                let chara = this.add.sprite(2000, 450, 'characters');
+                chara.scale = 0.3
+
+                this.tweens.add({
+                    targets: chara,
+                    x: 1500,
+                    duration: 2000,
+                })
+                
+                this.input.once('pointerdown', () => {
+                    this.scene.start('end');
+                });
+            }
+        }
+
+        class end extends Phaser.Scene{
+            constructor() {
+                super({key: 'end'})
+            }
+
+            preload() {
+                this.load.image('come', 'assets/images/text2.png');
+                this.load.audio('bell', 'assets/sounds/sparkle.mp3');
+            }
+
+            create() {
+                let bell = this.sound.add('bell');
+                bell.play();
+                let text = this.add.sprite(1920/2, 400, 'come');
+                text.scale = 1.5;
+            }
+        }
+
+
+
+        let game = new Phaser.Game({
+            width: 1920,
+            height: 1080,
+            scene: [titlePage ,infoPage, end],
+            backgroundColor: 0x212121,
+
+        })
+    </script>
+</head>
+<body>
+    
+    
+</body>
+</html>
