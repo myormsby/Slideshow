@@ -5,3 +5,5 @@ for the two audio scenes I used creative commons resources that are free for all
 for the images i drew one and then commissioned the other from a friend,
 
 the geometric shapes are a circle and a rectangle in the second scene
+
+I created two large texts, one for the 'studio' name and one for the invitation
